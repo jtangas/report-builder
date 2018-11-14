@@ -3,13 +3,6 @@ import app from 'features/app/routes';
 import reports from 'features/reports/routes';
 import tokens from 'features/tokens/routes';
 
-const appRoutes = [
-  ...auth,
-  ...app,
-  ...reports,
-  ...tokens,
-];
-
 const fullRoutes = [
   ...auth,
   ...app,
@@ -18,6 +11,5 @@ const fullRoutes = [
 ];
 
 export {
-  appRoutes,
   fullRoutes,
 };

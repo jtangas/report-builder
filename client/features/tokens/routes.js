@@ -1,5 +1,6 @@
 import EditTokens from 'features/tokens/containers/EditTokensContainer';
 import CreateTokens from 'features/tokens/containers/CreateTokensContainer';
+import ManageTokens from 'features/tokens/containers/ManageTokens';
 
 import NotFound from 'features/app/containers/NotFound';
 import Page from 'features/app/containers/PageContainer';
@@ -30,11 +31,22 @@ export default [
     requiresAuth: true,
     component: Page,
     exact: false,
-    props: {
-      requiresAuth: true,
-      withSideNav: true,
+    inMenu: true,
+    withSideNav: true,
+    render: NotFound,
+    sideNavProps: {
       routes: TokenRoutes,
-      defaultComponent: NotFound,
     },
   },
+  {
+    path: '/tokens/:action(/:tokenId)',
+    exact: false,
+    requiresAuth: true,
+    component: Page,
+    withSideNav: true,
+    render: ManageTokens,
+    sideNavProps: {
+      routes: TokenRoutes,
+    },
+  }
 ];

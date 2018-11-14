@@ -3,6 +3,7 @@ const loadReportsAction = () => dispatch => new Promise((resolve, reject) => {
     fetch('/api/report')
       .then(res => res.json())
       .then(data => {
+        console.log(data);
         dispatch({
           type: 'LOAD_REPORTS',
           payload: data.data,

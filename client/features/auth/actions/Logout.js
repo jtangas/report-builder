@@ -1,9 +1,8 @@
-export default data => dispatch => {
+export default () => dispatch => {
   return new Promise((resolve, reject) => {
     try {
       dispatch({
-        type: 'LOGIN_ACTION',
-        payload: data,
+        type: 'LOGOUT_ACTION',
       });
       resolve('ok');
     } catch (err) {

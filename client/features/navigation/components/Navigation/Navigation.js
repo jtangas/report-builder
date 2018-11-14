@@ -1,19 +1,27 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Menu } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import { GenerateMenu } from 'util/helpers/Menu';
 
-const Navigation = props => {
+import logoutAction from 'features/auth/actions/Logout';
+
+const mapStateToProps = state => ({
+  authenticated: state.auth.loggedIn,
+  user: state.user,
+});
+
+export default withRouter(connect(mapStateToProps, {logout: logoutAction})(props => {
   const {
     routes,
     authenticated,
     user,
     history,
-    logoutAction,
+    logout,
   } = props;
-  console.log(history);
+
   return (
-    <GenerateMenu routes={routes} history={history}>
+    <GenerateMenu authenticated={authenticated} routes={routes} history={history}>
       <Menu.Menu position="right">
         {authenticated === true && ([
           <Menu.Item
@@ -25,7 +33,7 @@ const Navigation = props => {
           <Menu.Item
             key="logout_link"
             name="logout"
-            onClick={() => history.push('/')}
+            onClick={logout}
           />
         ])}
         {authenticated === false && ([
@@ -39,15 +47,4 @@ const Navigation = props => {
       </Menu.Menu>
     </GenerateMenu>
   )
-};
-
-Navigation.defaultProps = {
-  authenticated: false,
-  user: {
-    firstName: 'Justin',
-    lastName: 'Tangas',
-  },
-  logoutAction: () => history.push('/login'),
-};
-
-export default withRouter(Navigation);
+}));

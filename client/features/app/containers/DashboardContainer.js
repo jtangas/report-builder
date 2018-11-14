@@ -10,7 +10,7 @@ const Dashboard = props => {
     return <Redirect to="/" />;
   }
   return (
-    <div>
+    <div style={{ flex: 1 }}>
       <p>Dashboard Page</p>
     </div>
   );
@@ -25,7 +25,7 @@ Dashboard.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  // authenticated: state.auth.loggedIn,
+  authenticated: state.auth.loggedIn,
 });
 
 export default withRouter(connect(mapStateToProps, null)(Dashboard));

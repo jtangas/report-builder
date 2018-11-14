@@ -15,7 +15,7 @@ mongoose.connect('mongodb://localhost:27018');
 const { NODE_ENV, PORT } = process.env;
 
 let app = express();
-let port = PORT || 5000;
+let port = PORT || 5001;
 let router = routes();
 
 app.use(compression());

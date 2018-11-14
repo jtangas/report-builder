@@ -47,9 +47,11 @@ export const GenerateGroups = props => {
 export const GenerateMenu = props => {
   const {routes, history, authenticated, children} = props;
   const routesToDisplay = routes.filter(route => (
-    (route.requiresAuth && authenticated === true)
-    || (!route.requiresAuth)
+    ((route.requiresAuth && authenticated === true)
+    || (!route.requiresAuth)) && route.inMenu
   ));
+
+  console.log(routesToDisplay);
 
   return (
     <Segment inverted style={{ border: 0, boxShadow: 'none' }}>

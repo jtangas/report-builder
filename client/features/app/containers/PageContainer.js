@@ -1,10 +1,43 @@
 import React from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import Page from 'features/app/components/Page/Page';
 
+class PageContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    // maybe do tracking here
+  }
+
+  componentWillMount() {
+    if (!this.props.isAuthenticated) {
+      return;
+    }
+  }
+
+  render() {
+    const passThroughProps = (({withSideNav, path, exact, render, sideNavProps}) => ({withSideNav, path, exact, render, sideNavProps}))(this.props);
+    if (!this.props.isAuthenticated && this.props.requiresAuth) {
+      return (
+        <Redirect
+          to={{
+            pathname: '/',
+          }}
+        />
+      )
+    }
+
+    return (
+      <Page
+        {...passThroughProps}
+      />
+    )
+  }
+}
+
 const mapStateToProps = state => ({
-  authenticated: state.auth.loggedIn,
+  isAuthenticated: state.auth.loggedIn,
 });
 
-export default connect(mapStateToProps, null)(Page);
+export default connect(mapStateToProps, null)(PageContainer);

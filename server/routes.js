@@ -24,36 +24,43 @@ export default () => {
   router.route('/auth/login')
     .post(async (req, res) => {
       const { username, password } = req.body;
-      User.findOne({ email: username }, async (err, user) => {
-        if (user === undefined || user === null) {
-          res.json({
-            success: false,
-            message: 'Invalid username or password',
-          });
-          return
-        }
-
-        bcrypt.compare(password, user.password).then(match => {
-          if (match) {
-            res.json({
-              success: true,
-              message: 'user successfully authenticated',
-              user: {
-                firstName: user.firstName,
-                lastName: user.lastName,
-                username: user.username,
-                email: user.email,
-                id: user._id,
-              }
-            });
-          } else {
+      try {
+        User.findOne({ email: username }, async (err, user) => {
+          if (user === undefined || user === null) {
             res.json({
               success: false,
-              message: 'invalid username or password',
+              message: 'Invalid username or password',
             });
+            return
           }
+
+          bcrypt.compare(password, user.password).then(match => {
+            if (match) {
+              res.json({
+                success: true,
+                message: 'user successfully authenticated',
+                user: {
+                  firstName: user.firstName,
+                  lastName: user.lastName,
+                  username: user.username,
+                  email: user.email,
+                  id: user._id,
+                }
+              });
+            } else {
+              res.json({
+                success: false,
+                message: 'invalid username or password',
+              });
+            }
+          });
         });
-      });
+      } catch (err) {
+        res.json({
+          success: false,
+          message: err,
+        });
+      }
     });
 
   router.route('/user/register')
@@ -82,7 +89,6 @@ export default () => {
         }
       });
     });
-
 
   router.route('/tokens')
     .get(function(req, res) {
@@ -204,8 +210,7 @@ export default () => {
 
         res.json(result);
       });
-    })
-  ;
+    });
 
   router.route('/report')
     .get(function(req, res) {
@@ -228,21 +233,25 @@ export default () => {
       console.log('in report');
       const { body } = req;
       ReportConfig.findOne({ name: body.name }, async (err, report) => {
-        console.log({err, report});
         if (report !== null) {
           res.json({
             success: false,
             message: 'A report template already exists with that name',
           });
         } else {
+          console.log(body);
           let reportConfig = new ReportConfig();
           reportConfig.name = body.reportName;
           reportConfig.type = body.reportType;
+          reportConfig.client = body.reportClient;
+          reportConfig.variant = body.reportVariant;
           reportConfig.template = body.template;
           reportConfig.language = body.language;
           reportConfig.phenotypes = body.phenotypes;
           reportConfig.phenotypeSpecificTemplates = body.phenotypeSpecificTemplates;
           reportConfig.createdBy = body.createdBy;
+          reportConfig.approved = false;
+          reportConfig.approvedBy = null;
 
           reportConfig.save(err => {
             if (err)

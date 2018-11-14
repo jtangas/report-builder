@@ -5,9 +5,11 @@ import { Menu } from 'semantic-ui-react';
 import { GenerateGroups, GenerateMenuItem } from 'util/helpers/Menu';
 
 const SideNav = props => {
+  console.log(props);
   const { routes, history, authenticated, dispatch, staticContext, match, location, ...rest } = props;
+
   const groups = [...new Set(routes.map(route => route.group))].filter(n => n);
-  const ungroupedRoutes = routes.map(route => {
+  const ungroupedRoutes = routes.length && routes.map(route => {
     if (route.group === null || route.group === undefined || route.group === '') {
       return route;
     }
