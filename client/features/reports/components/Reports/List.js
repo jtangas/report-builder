@@ -10,10 +10,16 @@ const mapDispatchToProps = {
 
 const mapStateToProps = state => ({
   reports: state.reports.list,
+  fetched: state.reports.fetched,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(props => {
-  const { reports, loadReports } = props;
+  const { reports, loadReports, fetched } = props;
+
+  if (!fetched && reports.length === 0) {
+    loadReports();
+  }
+
   return (
     <Segment basic style={{ padding: '10px' }}>
       {reports.length === 0 && (<div>
@@ -22,7 +28,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(props => {
           Load Reports
         </Button>
       </div>)}
-      {reports.length > 0 && <p>Reports Found</p>}
+      {reports.length > 0 && (
+        reports.map(report => (
+          <div>
+            <p>{report.name}</p>
+          </div>
+        ))
+      )}
     </Segment>
   )
 });

@@ -10,7 +10,7 @@ import routes from './server/routes';
 import devServer from './server/middleware/devServer';
 import renderTemplate from './templates/index-page';
 
-mongoose.connect('mongodb://localhost:27018');
+mongoose.connect('mongodb://localhost:27018/reports', {useNewUrlParser: true});
 
 const { NODE_ENV, PORT } = process.env;
 
