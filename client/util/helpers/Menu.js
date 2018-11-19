@@ -51,8 +51,6 @@ export const GenerateMenu = props => {
     || (!route.requiresAuth)) && route.inMenu
   ));
 
-  console.log(routesToDisplay);
-
   return (
     <Segment inverted style={{ border: 0, boxShadow: 'none' }}>
       <Menu pointing secondary stackable inverted>

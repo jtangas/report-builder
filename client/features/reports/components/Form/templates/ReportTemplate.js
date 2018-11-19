@@ -126,25 +126,28 @@ const RenderField = props => {
                 }}
               >
                 <div style={{ flexDirection: 'row', flex: 1, display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
-                  {field.options.map(option => (
-                    <div
-                      key={`phenotype_${option.id}`}
-                      style={{ flexShrink: 1, flexGrow: 1, flexBasis: '25%' }}
-                    >
-                      <Form.Checkbox
-                        name={option.name}
-                        value={option.id}
-                        label={option.name}
-                        onChange={(e, data) => {
-                          if (data.checked) arrayHelpers.push(option.id);
-                          else {
-                            const idx = values[field.name].indexOf(option.id);
-                            arrayHelpers.remove(idx);
-                          }
-                        }}
-                      />
-                    </div>
-                  ))}
+                  {field.options.map(option => {
+                    return (
+                      <div
+                        key={`phenotype_${option.id}`}
+                        style={{ flexShrink: 1, flexGrow: 1, flexBasis: '25%' }}
+                      >
+                        <Form.Checkbox
+                          name={option.name}
+                          value={option.id}
+                          label={option.name}
+                          checked={(values[field.name].includes(option.id))}
+                          onChange={(e, data) => {
+                            if (data.checked) arrayHelpers.push(option.id);
+                            else {
+                              const idx = values[field.name].indexOf(option.id);
+                              arrayHelpers.remove(idx);
+                            }
+                          }}
+                        />
+                      </div>
+                    )
+                  })}
                 </div>
               </div>
             )}
@@ -190,8 +193,6 @@ export default props => {
     ...rest
   } = props;
 
-  console.log(rest.values);
-
   return (
     <Grid
       style={{
@@ -202,7 +203,7 @@ export default props => {
       }}
     >
       <Grid.Column>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} className={"testName"}>
           <Segment>
             {formFields.map((field, i) => {
               if (Array.isArray(field)) {

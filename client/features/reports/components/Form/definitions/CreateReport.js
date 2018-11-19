@@ -1,17 +1,18 @@
 import * as Yup from 'yup';
 
 export const Values = {
-    reportName: '',
-    reportType: '',
+    name: '',
+    type: '',
     phenotypes: [],
     template: '',
     language: '',
     //user: currentUser.id,
 };
+
 export const Validation = Yup.object().shape({
-  reportName: Yup.string()
+  name: Yup.string()
     .required('Report Name is Required'),
-  reportType: Yup.string()
+  type: Yup.string()
     .required('Report Type is Required'),
   template: Yup.string()
     .required('Report Template is Required'),
@@ -23,15 +24,19 @@ export const Validation = Yup.object().shape({
 
 export const Fields = [
   {
+    type: 'hidden',
+    name: '_id',
+  },
+  {
     type: 'text',
-    name: 'reportName',
+    name: 'name',
     label: 'Report Name',
     placeholder: 'Your report name',
   },
   [
     {
       type: 'select',
-      name: 'reportClient',
+      name: 'client',
       label: 'Client',
       placeholder: 'Please select a client',
       options: [
@@ -43,7 +48,7 @@ export const Fields = [
     },
     {
       type: 'select',
-      name: 'reportVariant',
+      name: 'variant',
       label: 'Variant',
       placeholder: 'Please select a variant',
       options: [
@@ -55,7 +60,7 @@ export const Fields = [
   [
     {
       type: 'select',
-      name: 'reportType',
+      name: 'type',
       label: 'Report Type',
       placeholder: 'Please Select A Report Type',
       options: [

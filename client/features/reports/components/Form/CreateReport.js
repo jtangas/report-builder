@@ -12,7 +12,7 @@ import {
 
 export default connect((state => ({ reports: state.reports.list })), null)(props => {
   const {
-    handleSubmit,
+    handleSubmit: submitHandler,
     render: UserComponent,
     reportId,
     reports,
@@ -20,13 +20,13 @@ export default connect((state => ({ reports: state.reports.list })), null)(props
 
   const report = reports.find(report => report._id === reportId);
   const Template = UserComponent || CreateReportTemplate;
-  const initialValues = report || Values;
+  let initialValues = report || Values;
 
   return (
     <Formik
       enableReinitialize
       initialValues={initialValues}
-      onSubmit={handleSubmit}
+      onSubmit={submitHandler}
       validationSchema={Validation}
       render={formikProps => {
         return (

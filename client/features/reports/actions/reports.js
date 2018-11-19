@@ -15,6 +15,31 @@ const loadReportsAction = () => dispatch => new Promise((resolve, reject) => {
   }
 });
 
+const updateReportAction = (reportId, values) => dispatch => new Promise((resolve, reject) => {
+  try {
+    fetch(`/api/report/${reportId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+      body: JSON.stringify(values),
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data.message);
+        if (data.success) {
+          dispatch({
+            type: 'UPDATE_REPORT',
+            payload: data.data,
+          });
+        }
+      });
+    resolve('ok');
+  } catch (err) {
+    reject(err);
+  }
+});
+
 const createReportAction = values => dispatch => new Promise((resolve, reject) => {
   try {
     fetch('/api/report', {
@@ -44,4 +69,5 @@ const createReportAction = values => dispatch => new Promise((resolve, reject) =
 export {
   loadReportsAction,
   createReportAction,
+  updateReportAction,
 };

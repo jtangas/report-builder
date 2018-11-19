@@ -212,6 +212,26 @@ export default () => {
       });
     });
 
+  router.route('/report/:id')
+    .put(async function(req, res) {
+      const { id } = req.params;
+      console.log('test');
+      ReportConfig.findOne({_id: id}, (err, report) => {
+        if (err) {
+          res.json({
+            success: false,
+            message: err,
+          });
+        }
+
+        res.json({
+          success: true,
+          message: 'Report Successfully Found',
+          data: report,
+        });
+      });
+    });
+
   router.route('/report')
     .get(function(req, res) {
       ReportConfig.find({}, (err, reports) => {
@@ -241,10 +261,10 @@ export default () => {
         } else {
           console.log(body);
           let reportConfig = new ReportConfig();
-          reportConfig.name = body.reportName;
-          reportConfig.type = body.reportType;
-          reportConfig.client = body.reportClient;
-          reportConfig.variant = body.reportVariant;
+          reportConfig.name = body.name;
+          reportConfig.type = body.type;
+          reportConfig.client = body.client;
+          reportConfig.variant = body.variant;
           reportConfig.template = body.template;
           reportConfig.language = body.language;
           reportConfig.phenotypes = body.phenotypes;

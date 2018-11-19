@@ -11,6 +11,11 @@ export default (state = initialState, action) => {
         list: action.payload,
         fetched: true,
       };
+    case 'ADD_NEW_REPORT':
+      return {
+        ...state,
+        list: state.list.concat(action.payload),
+      };
     default:
       return state;
   }

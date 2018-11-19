@@ -14,6 +14,7 @@ let ReportConfigSchema = new Schema({
   createdBy: Number,
   approved: Boolean,
   approvedBy: Number,
+  createdAt: Date,
 });
 
 module.exports = mongoose.model('ReportConfig', ReportConfigSchema);

@@ -17,7 +17,6 @@ export default withRouter(connect(null, {login: loginAction})(props => {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         login(data.user).then(() => {
           history.push('/dashboard');
         });
