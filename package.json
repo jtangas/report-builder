@@ -1,9 +1,9 @@
 {
-  "name": "pathway-software",
+  "name": "software",
   "version": "1.0.0",
-  "description": "Pathway Genomics Software",
+  "description": "Software",
   "main": "index.js",
-  "author": "Justin Tangas <justin.tangas@pathway.com>",
+  "author": "Justin Tangas <justin.tangas@gmail.com>",
   "license": "MIT",
   "scripts": {
     "start:dev": "NODE_ENV=development NODE_PATH=client/ nodemon --watch server --watch client -e js -e css --exec babel-node index.js"
