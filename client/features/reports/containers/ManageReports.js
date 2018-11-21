@@ -30,7 +30,8 @@ export default
   const { reportId, action } = match.params;
 
   const handleUpdateSubmit = values => {
-    updateReport(reportId, values);
+    updateReport(reportId, values)
+      .then(data => console.log(data));
   };
 
   const handleSubmit = values => {
